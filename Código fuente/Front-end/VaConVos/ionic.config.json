@@ -1,5 +1,7 @@
 {
-  "name": "ionic-app-base",
-  "integrations": {},
+  "name": "VaConVos",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular-standalone"
 }
