@@ -1,0 +1,25 @@
+ion-content {
+  --background: #b2d8c5; // color de fondo aproximado al de la imagen
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-weight: bold;
+    color: #2d3e36;
+  }
+}
+
+.avatar {
+  font-size: 100px;
+  color: #7c8f87;
+}
+
+ion-item {
+  --background: #42ab7d;
+  --border-radius: 12px;
+  margin: 8px 16px;
+}
