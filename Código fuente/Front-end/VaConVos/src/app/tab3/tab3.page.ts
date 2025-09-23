@@ -12,7 +12,7 @@ import { IonContent,
   IonCardTitle,
   IonCardContent,
   IonBadge,
-  IonIcon } from '@ionic/angular/standalone';
+  IonIcon, IonThumbnail } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
 
@@ -27,7 +27,7 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
   IonButton, 
   IonList, 
   IonItem, 
-  IonLabel, 
+  IonLabel, IonThumbnail,
   IonCard,
   IonCardHeader,
   IonCardTitle,

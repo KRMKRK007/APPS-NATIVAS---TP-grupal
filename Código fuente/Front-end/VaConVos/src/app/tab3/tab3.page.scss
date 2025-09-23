@@ -1,23 +1,35 @@
 ion-content {
-  --background: #e6f0eb; // Fondo verde claro
-}
-
-.title {
-  font-weight: bold;
-  color: #2d3e36;
-  margin: 10px 16px;
+  --background: #b2d8c5;
 }
 
 ion-item {
-  --background: #f0f7f4;
-  --border-radius: 12px;
-  margin: 8px 16px;
+  --background: #42ab7d;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  ion-thumbnail {
-    width: 50px;
-    height: 50px;
-    img {
-      object-fit: contain;
-    }
-  }
+ion-thumbnail {
+  --size: 60px;
+  --border-radius: 8px;
+}
+
+ion-badge {
+  font-weight: 600;
+}
+
+h2 {
+  font-weight: 600;
+  color: #2d3e36;
+}
+
+p {
+  color: white;
+  margin: 2px 0;
+}
+
+strong {
+  color: darkgreen; /* Color verde de Ionic para acentuar el total */
 }
