@@ -10,7 +10,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar,
   IonLabel, 
   IonTabBar, 
   IonTabButton, 
-  IonFooter} from '@ionic/angular/standalone';
+  IonFooter, 
+  AlertController } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
 @Component({
@@ -29,11 +30,73 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
   IonTabButton],
 })
 export class Tab4Page {
-  constructor() {}
+  constructor(private alertController: AlertController) {}
 
   goTo(page: string) {
     console.log('Navegar a:', page);
     // Aquí puedes usar router.navigate(['/ruta']) según tus páginas
   }
+
+  // Acción para el botón "Contacto"
+async openContact() {
+  const alert = await this.alertController.create({
+    header: 'Contacto',
+    message: 'Ingresá tus datos de contacto:',
+    inputs: [
+      {
+        name: 'telefono',
+        type: 'tel',
+        placeholder: 'Teléfono'
+      },
+      {
+        name: 'email',
+        type: 'email',
+        placeholder: 'Email'
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel'
+      },
+      {
+        text: 'Guardar',
+        handler: (data) => {
+          console.log('Contacto guardado:', data);
+          // Acá podés manejar los datos, por ej. guardarlos en storage o enviarlos al backend
+        }
+      }
+    ]
+  });
+  await alert.present();
 }
 
+// Acción para el botón "Atención al cliente"
+async openSupport() {
+  const alert = await this.alertController.create({
+    header: 'Atención al Cliente',
+    message: 'Escribí tu consulta y te responderemos:',
+    inputs: [
+      {
+        name: 'mensaje',
+        type: 'textarea',
+        placeholder: 'Escribí tu mensaje aquí'
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel'
+      },
+      {
+        text: 'Enviar',
+        handler: (data) => {
+          console.log('Consulta enviada:', data);
+          // Acá podés procesar el mensaje, por ej. mandarlo al soporte
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
+}
