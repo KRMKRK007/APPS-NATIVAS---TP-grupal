@@ -1,60 +1,44 @@
-// src/app/tab1/tab1.page.ts
-
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // Importa el Router
-import {   
+import {
   IonHeader, IonToolbar, IonTitle, IonContent,
-  IonButtons, IonButton, IonIcon,
-  IonList, IonItem, IonLabel,
-  IonFooter, IonTabBar, IonTabButton, IonSpinner
+  IonButtons, IonBackButton, IonButton, IonIcon,
+  IonList, IonItem, IonLabel, IonThumbnail,
+  IonFooter, IonTabBar, IonTabButton, IonSearchbar
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
-import { ApiService } from '../services/api.service';
+import { ProductoService } from '../services/producto.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  standalone: true,
   imports: [
-    CommonModule, 
     IonHeader, IonToolbar, IonTitle, IonContent,
-    IonButtons, IonButton, IonIcon,
-    IonList, IonItem, IonLabel,
-    IonFooter, IonTabBar, IonTabButton, IonSpinner,
-    ExploreContainerComponent 
+    IonButtons, IonBackButton, IonButton, IonIcon,
+    IonList, IonItem, IonLabel, IonThumbnail,
+    IonFooter, IonTabBar, IonTabButton, ExploreContainerComponent,
+    CommonModule, IonSearchbar
   ]
 })
 export class Tab1Page implements OnInit {
-  
-  categories: any[] = [];
-  isLoading = true;
 
-  // Inyecta el Router junto con el servicio
-  constructor(private apiService: ApiService, private router: Router) {}
+  productosDestacados: any[] = [];
+  productosFiltrados: any[] = [];
+
+  constructor(private productoService: ProductoService) {}
 
   ngOnInit() {
-    this.loadCategories();
-  }
-
-  loadCategories() {
-    this.isLoading = true;
-    this.apiService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error al cargar categorías:', err);
-        this.isLoading = false;
-      }
+    this.productoService.getDestacados().subscribe(data => {
+      this.productosDestacados = data;
+      this.productosFiltrados = data;
     });
   }
 
-  // --- AÑADE ESTA FUNCIÓN ---
-  // Navega a la página de productos pasando el ID de la categoría
-  openCategory(categoryId: number) {
-    this.router.navigate(['/products', categoryId]);
+  handleInput(event: any) {
+    const query = event.target.value.toLowerCase();
+    this.productosFiltrados = this.productosDestacados.filter((producto) => {
+      return producto.nombre.toLowerCase().includes(query);
+    });
   }
 }

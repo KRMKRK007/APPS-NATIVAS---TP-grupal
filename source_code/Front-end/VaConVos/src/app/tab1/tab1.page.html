@@ -1,18 +1,29 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-title>VaConVos</ion-title>
-    </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-searchbar placeholder="Buscar productos" (ionInput)="handleInput($event)"></ion-searchbar>
 
   <h2 class="title">Productos destacados</h2>
 
-  <ion-list *ngIf="!isLoading && categories.length > 0">
-    <ion-item *ngFor="let category of categories" button detail="true" (click)="openCategory(category.id)">
-      <ion-icon slot="start" name="basket-outline" class="icon-large"></ion-icon>
-      <ion-label>{{ category.name }}</ion-label>
+  <ion-list>
+    <ion-item *ngFor="let producto of productosFiltrados" button detail="true">
+      <ion-icon slot="start" [name]="producto.icono" class="icon-large"></ion-icon>
+      <ion-label>{{ producto.nombre }}</ion-label>
     </ion-item>
   </ion-list>
 
-  </ion-content>
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>
