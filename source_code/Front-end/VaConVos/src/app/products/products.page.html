@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ categoryName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="isLoading" style="text-align: center; padding: 20px;">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <ion-list *ngIf="!isLoading && products.length > 0">
+    <ion-item *ngFor="let product of products" class="product-item">
+      <ion-thumbnail slot="start">
+        <img [src]="product.imageUrl || 'https://via.placeholder.com/80'" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.price | currency }}</p>
+      </ion-label>
+      <ion-button slot="end" color="success" (click)="addToCart(product)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!isLoading && products.length === 0">
+    <p style="text-align: center;">No hay productos en esta categoría.</p>
+  </div>
+</ion-content>
