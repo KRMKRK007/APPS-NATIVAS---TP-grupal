@@ -1,22 +1,22 @@
-// src/main.ts
-
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
+import { RouteReuseStrategy, provideRouter } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-
-// Importa la función para proveer el HttpClient
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; // <-- 1. IMPORTA ESTO
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
-    
-    // Añade esta línea para habilitar HttpClient en toda la aplicación
-    provideHttpClient(),
+    provideRouter(routes),
+    importProvidersFrom(HttpClientModule), // <-- 2. AÑADE ESTO
   ],
 });

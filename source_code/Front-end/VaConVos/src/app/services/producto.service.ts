@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SupabaseService } from './supabase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
-  constructor() { }
+  constructor(private supabase: SupabaseService) { }
 
-  getDestacados() {
-    // Aquí, en el futuro, haríamos una llamada a una API real.
-    // Por ahora, usamos datos de prueba.
-    return of([
-      { id: 1, nombre: 'Frutas y verduras', icono: 'basket-outline' },
-      { id: 2, nombre: 'Carnes', icono: 'restaurant-outline' },
-      { id: 3, nombre: 'Supermercado', icono: 'storefront-outline' }
-    ]);
+  getDestacados(): Observable<any[]> {
+    // Hacemos la consulta a la tabla 'Producto' en Supabase
+    const promise = this.supabase.client
+      .from('Producto') // El nombre de tu tabla
+      .select('*');     // Seleccionamos todas las columnas
+
+    // Convertimos la promesa que devuelve Supabase en un Observable
+    return from(promise).pipe(
+      map(response => response.data || [])
+    );
   }
 }
