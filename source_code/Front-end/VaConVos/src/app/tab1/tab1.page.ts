@@ -1,44 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  IonHeader, IonToolbar, IonTitle, IonContent,
+import {   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButtons, IonBackButton, IonButton, IonIcon,
   IonList, IonItem, IonLabel, IonThumbnail,
-  IonFooter, IonTabBar, IonTabButton, IonSearchbar
-} from '@ionic/angular/standalone';
+  IonFooter, IonTabBar, IonTabButton} from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { ProductoService } from '../services/producto.service';
+// Make sure the file '../services/product.service.ts' exists and is correctly named.
+import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [
-    IonHeader, IonToolbar, IonTitle, IonContent,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent,
     IonButtons, IonBackButton, IonButton, IonIcon,
     IonList, IonItem, IonLabel, IonThumbnail,
-    IonFooter, IonTabBar, IonTabButton, ExploreContainerComponent,
-    CommonModule, IonSearchbar
-  ]
+    IonFooter, IonTabBar, IonTabButton, ExploreContainerComponent, CommonModule ]
 })
 export class Tab1Page implements OnInit {
+  products: any[] = [];
 
-  productosDestacados: any[] = [];
-  productosFiltrados: any[] = [];
+  constructor(private productService: ProductoService, private cartService: CartService) {}
 
-  constructor(private productoService: ProductoService) {}
-
-  ngOnInit() {
-    this.productoService.getDestacados().subscribe(data => {
-      this.productosDestacados = data;
-      this.productosFiltrados = data;
-    });
+  async ngOnInit() {
+    this.products = await this.productService.getProducts();
   }
-
-  handleInput(event: any) {
-    const query = event.target.value.toLowerCase();
-    this.productosFiltrados = this.productosDestacados.filter((producto) => {
-      return producto.nombre.toLowerCase().includes(query);
-    });
+  addToCart(product: any) {
+    this.cartService.addToCart(product);
+    console.log(`${product.Nombre} agregado al carrito`);
   }
-}
+  }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SupabaseService } from './supabase';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class ProductoService {
 
   getDestacados(): Observable<any[]> {
     // Hacemos la consulta a la tabla 'Producto' en Supabase
-    const promise = this.supabase.client
+    const promise = this.supabase.Client
       .from('Producto') // El nombre de tu tabla
       .select('*');     // Seleccionamos todas las columnas
 
@@ -21,4 +21,15 @@ export class ProductoService {
       map(response => response.data || [])
     );
   }
+ async getProducts(): Promise<any[]> {
+    const { data, error } = await this.supabase.Client
+      .from('Producto')
+      .select('*');
+    if (error) {
+      console.error('Error fetching products:', error);
+      return [];
+    }
+    return data || [];
+  }
 }
+

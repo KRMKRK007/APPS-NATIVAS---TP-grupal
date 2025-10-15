@@ -6,12 +6,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SupabaseService {
-  public client: SupabaseClient;
+  public Client: SupabaseClient;
 
   constructor() {
-    this.client = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
+    this.Client = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 }

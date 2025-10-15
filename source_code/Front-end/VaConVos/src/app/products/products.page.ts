@@ -65,7 +65,7 @@ export class ProductsPage implements OnInit {
 
   // Añade un producto al carrito
   addToCart(product: any) {
-    this.cartService.addProduct(product);
+    this.cartService.addToCart(product);
     this.presentToast(`${product.name} añadido al carrito`);
   }
 

@@ -1,48 +1,29 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-title>Tu Carrito</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ng-container *ngIf="(cartItems$ | async) as items">
-    <div *ngIf="items.length === 0" class="empty-cart">
-      <ion-icon name="cart-outline"></ion-icon>
-      <p>Tu carrito está vacío</p>
-    </div>
 
-    <ion-list *ngIf="items.length > 0">
-      <ion-item *ngFor="let item of items">
-        <ion-thumbnail slot="start">
-          <img [src]="item.imageUrl || 'https://via.placeholder.com/50'" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ item.name }}</h2>
-          <p>{{ item.quantity }} x {{ item.price | currency }}</p>
-        </ion-label>
-        <ion-label slot="end" color="primary">
-          <strong>{{ (item.price * item.quantity) | currency }}</strong>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ng-container>
+  <ion-list>
+    <ion-item *ngFor="let item of cartItems">
+      <ion-thumbnail slot="start">
+        <img alt="Producto" src="https://via.placeholder.com/50" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.Nombre }}</h2>
+        <p>{{ item.Descripcion }}</p>
+      </ion-label>
+      <ion-label slot="end">
+        ${{ item.Precio }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
 
-<ion-footer *ngIf="(cartItems$ | async)?.length">
+<ion-footer>
   <ion-toolbar>
-    <ion-grid>
-      <ion-row class="ion-align-items-center">
-        <ion-col>
-          <ion-text>
-            <h4>Total: <strong>{{ subtotal$ | async | currency }}</strong></h4>
-          </ion-text>
-        </ion-col>
-        <ion-col size="auto">
-          <ion-button color="success" (click)="checkout()">
-            Finalizar Compra
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-title>Total: ${{ getTotal() }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="success">
+        Finalizar Compra
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

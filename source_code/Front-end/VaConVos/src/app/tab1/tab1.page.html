@@ -1,29 +1,38 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-title>VaConVos</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="notifications-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title>VaConVos</ion-title>
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-content class="ion-padding">
 
-  <ion-searchbar placeholder="Buscar productos" (ionInput)="handleInput($event)"></ion-searchbar>
+    <h2 class="title">Productos destacados</h2>
 
-  <h2 class="title">Productos destacados</h2>
+    <ion-list>
+      <ion-item *ngFor="let product of products">
+        <ion-thumbnail slot="start">
+          <ion-icon name="basket-outline" class="icon-large"></ion-icon>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ product.Nombre }}</h2>
+          <p>{{ product.Descripcion }}</p>
+          <p><strong>Precio: ${{ product.Precio }}</strong></p>
+        </ion-label>
+        <ion-button slot="end" (click)="addToCart(product)">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
 
-  <ion-list>
-    <ion-item *ngFor="let producto of productosFiltrados" button detail="true">
-      <ion-icon slot="start" [name]="producto.icono" class="icon-large"></ion-icon>
-      <ion-label>{{ producto.nombre }}</ion-label>
-    </ion-item>
-  </ion-list>
+  </ion-content>
 
 </ion-content>
-
-<ion-footer>
-
-</ion-footer>
