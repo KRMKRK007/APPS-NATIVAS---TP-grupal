@@ -6,6 +6,7 @@ export const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
+      // ... (tus otras rutas tab1, tab2, tab3)
       {
         path: 'tab1',
         loadComponent: () =>
@@ -30,6 +31,11 @@ export const routes: Routes = [
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full',
+      },
+         {
+        path: 'products/:categoria', // Usamos un parámetro dinámico
+        loadComponent: () =>
+          import('../products/products.page').then((m) => m.ProductsPage),
       },
     ],
   },

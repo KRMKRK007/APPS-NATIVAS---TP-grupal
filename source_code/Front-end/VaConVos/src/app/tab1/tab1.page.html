@@ -1,38 +1,31 @@
-<ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar color="light">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <ion-title>VaConVos</ion-title>
-      <ion-buttons slot="end">
-        <ion-button>
-          <ion-icon name="notifications-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>VaConVos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content class="ion-padding">
+<ion-content class="ion-padding">
+  <h2 class="title">Categorías</h2>
 
-    <h2 class="title">Productos destacados</h2>
+  <ion-list>
+    <ion-item button detail="true" (click)="verProductos('Frutas y Verduras')">
+      <ion-icon slot="start" name="basket-outline" class="icon-large"></ion-icon>
+      <ion-label>Frutas y verduras</ion-label>
+    </ion-item>
 
-    <ion-list>
-      <ion-item *ngFor="let product of products">
-        <ion-thumbnail slot="start">
-          <ion-icon name="basket-outline" class="icon-large"></ion-icon>
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ product.Nombre }}</h2>
-          <p>{{ product.Descripcion }}</p>
-          <p><strong>Precio: ${{ product.Precio }}</strong></p>
-        </ion-label>
-        <ion-button slot="end" (click)="addToCart(product)">
-          <ion-icon name="add-circle-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
+    <ion-item button detail="true" (click)="verProductos('Carnes')">
+      <ion-icon slot="start" name="restaurant-outline" class="icon-large"></ion-icon>
+      <ion-label>Carnes</ion-label>
+    </ion-item>
 
-  </ion-content>
-
+    <ion-item button detail="true" (click)="verProductos('Supermercado')">
+      <ion-icon slot="start" name="storefront-outline" class="icon-large"></ion-icon>
+      <ion-label>Supermercado</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
