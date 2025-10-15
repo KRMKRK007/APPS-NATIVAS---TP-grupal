@@ -1,9 +1,8 @@
-// src/app/products/products.page.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router'; // Para leer la URL
+import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ProductService } from '../services/product.service'; // Nuestro servicio
+import { ProductService, Product } from '../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -13,8 +12,16 @@ import { ProductService } from '../services/product.service'; // Nuestro servici
   imports: [IonicModule, CommonModule]
 })
 export class ProductsPage implements OnInit {
-  public categoria: string | null = null;
-  public products: any[] = [];
+  categoria: string = '';
+  products: Product[] = [];
+
+  // Mapeo de nombre de categoría a id_categoria
+  categoriaMap: { [key: string]: number } = {
+    'Frutas y Verduras': 1,
+    'Carnes': 2,
+    'Almacen': 3,
+    'Bebidas': 4
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -22,11 +29,13 @@ export class ProductsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    // Leemos el parámetro 'categoria' de la URL
-    this.categoria = this.route.snapshot.paramMap.get('categoria');
-    if (this.categoria) {
-      // Pedimos los productos de esa categoría al servicio
-      this.products = await this.productService.getProductsByCategory(this.categoria);
-    }
+    this.route.paramMap.subscribe(async params => {
+      this.categoria = params.get('categoria') || '';
+      if (this.categoria) {
+        const allProducts = await this.productService.getAllProducts();
+        const categoriaId = this.categoriaMap[this.categoria] || 0;
+        this.products = allProducts.filter(p => p.id_categoria === categoriaId);
+      }
+    });
   }
 }
