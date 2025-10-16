@@ -21,6 +21,10 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
+// Conectar a la base de datos
+pool.connect()
+    .then(() => console.log('Conectado a PostgreSQL'))
+    .catch(err => console.error('Error de conexión', err.stack));
 // === RUTAS DE LA API ===
 
 // Ruta para obtener todos los productos
@@ -34,16 +38,18 @@ app.get('/api/productos', async (req, res) => {
   }
 });
 
-// Ruta para obtener todas las categorías
-app.get('/api/productos', async (req, res) => {
+// Si necesitas una ruta para categorías, debería ser algo así:
+
+app.get('/api/categorias', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM producto');
+    const result = await pool.query('SELECT * FROM categoria'); // Asumiendo que tienes una tabla 'categoria'
     res.json(result.rows);
   } catch (error) {
-    console.error('Error al obtener los productos:', error); 
-    res.status(500).json({ error: 'Error al obtener los productos.', detalle: error.message });
+    console.error('Error al obtener las categorías:', error); 
+    res.status(500).json({ error: 'Error al obtener las categorías.', detalle: error.message });
   }
 });
+
 
 // Iniciar el servidor
 app.listen(port, () => {

@@ -22,6 +22,9 @@
         <p>{{ product.descripcion }}</p>
         <p><strong>Precio: ${{ product.precio }}</strong></p>
       </ion-label>
+      <ion-button (click)="agregarAlCarrito(product)" color="primary" slot="end">
+        Agregar al carrito
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

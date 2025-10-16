@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ProductService, Product } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -24,18 +25,37 @@ export class ProductsPage implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService
-  ) { }
+    private productService: ProductService,
+    private cartService: CartService,
+    private route: ActivatedRoute
+  ) {}
 
-  async ngOnInit() {
-    this.route.paramMap.subscribe(async params => {
-      this.categoria = params.get('categoria') || '';
-      if (this.categoria) {
-        const allProducts = await this.productService.getAllProducts();
-        const categoriaId = this.categoriaMap[this.categoria] || 0;
-        this.products = allProducts.filter(p => p.id_categoria === categoriaId);
-      }
-    });
+// En src/app/products/products.page.ts
+
+async ngOnInit() {
+  this.route.paramMap.subscribe(async params => {
+    this.categoria = params.get('categoria') || '';
+    // --- NUESTROS ESPÍAS ---
+    console.log('1. Categoría recibida de la URL:', this.categoria);
+
+    if (this.categoria) {
+      const allProducts = await this.productService.getAllProducts();
+      // Mostramos los datos que llegaron de la API
+      console.log('2. Datos recibidos del servicio (todos los productos):', allProducts);
+
+      const categoriaId = this.categoriaMap[this.categoria] || 0;
+      // Verificamos qué ID le corresponde a la categoría
+      console.log('3. ID de categoría que se usará para filtrar:', categoriaId);
+
+      this.products = allProducts.filter(p => p.id_categoria == categoriaId);
+      // Vemos el resultado final después de filtrar
+      console.log('4. Productos que quedan después del filtro:', this.products);
+      // --- FIN DE LOS ESPÍAS ---
+    }
+  });
+}
+
+  agregarAlCarrito(product: Product) {
+    this.cartService.addToCart(product);
   }
 }

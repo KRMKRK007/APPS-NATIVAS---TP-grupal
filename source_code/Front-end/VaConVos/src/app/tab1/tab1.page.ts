@@ -1,5 +1,5 @@
 // src/app/tab1/tab1.page.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // <-- Importa el Router
 import {
   IonHeader, IonToolbar, IonTitle, IonContent,
@@ -7,6 +7,8 @@ import {
   IonList, IonItem, IonLabel
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { ProductService, Product } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-tab1',
@@ -15,13 +17,27 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
   // Asegúrate que los imports del @Component sean los correctos
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonButtons, IonButton, IonIcon, IonList, IonItem, IonLabel]
 })
-export class Tab1Page {
-  // Inyecta el Router en el constructor
-  constructor(private router: Router) {}
+export class Tab1Page implements OnInit {
+  products: Product[] = [];
+  categoriaSeleccionada: string = 'Almacen'; // o la que quieras por defecto
 
-  verProductos(categoria: string) {
-    // Navegamos a una nueva ruta que crearemos en el siguiente paso
-    this.router.navigate(['/tabs/products', categoria]);
-    console.log('Navegando a la categoría:', categoria);
+  constructor(
+    private router: Router,
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
+
+  async ngOnInit() {
+    this.products = await this.productService.getAllProducts();
+    // Si quieres filtrar por categoría, hazlo aquí
+    // this.products = this.products.filter(p => p.id_categoria === 3); // ejemplo para Almacen
   }
+
+  agregarAlCarrito(product: Product) {
+    this.cartService.addToCart(product);
+  }
+
+verProductos(categoria: string) {
+  this.router.navigate(['/products', categoria]);
+}
 }
