@@ -1,19 +1,41 @@
 <ion-content [fullscreen]="true">
 
   <ion-list>
-    <ion-item *ngFor="let item of cartItems">
+    <ion-item *ngFor="let item of cartItems; trackBy: trackById">
       <ion-thumbnail slot="start">
         <img alt="Producto" src="https://via.placeholder.com/50" />
       </ion-thumbnail>
+
       <ion-label>
         <h2>{{ item.nombre }}</h2>
+        <p>Precio: ${{ item.precio }}</p>
+        <p>Subtotal: ${{ getSubtotal(item) }}</p>
+      </ion-label>
 
-      </ion-label>
-      <ion-label slot="end">
-        ${{ item.precio }}
-      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="medium" (click)="decrease(item)" [disabled]="item.cantidad <= 1">
+          <ion-icon name="remove-circle-outline"></ion-icon>
+        </ion-button>
+
+        <ion-badge color="primary">{{ item.cantidad }}</ion-badge>
+
+        <ion-button fill="clear" color="medium" (click)="increase(item)">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" color="danger" (click)="remove(item)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
+
+  <ion-item>
+    <ion-label>Método de pago</ion-label>
+    <ion-select [(ngModel)]="paymentMethod" placeholder="Selecciona uno">
+      <ion-select-option *ngFor="let option of paymentOptions" [value]="option">{{ option }}</ion-select-option>
+    </ion-select>
+  </ion-item>
 
 </ion-content>
 
@@ -21,7 +43,7 @@
   <ion-toolbar>
     <ion-title>Total: ${{ getTotal() }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="success">
+      <ion-button color="success" (click)="finalizarCompra()" [disabled]="cartItems.length === 0">
         Finalizar Compra
       </ion-button>
     </ion-buttons>
