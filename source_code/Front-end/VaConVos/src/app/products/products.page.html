@@ -14,15 +14,12 @@
 
   <ion-list *ngIf="products.length > 0">
     <ion-item *ngFor="let product of products">
-      <ion-thumbnail slot="start">
-        <ion-icon name="pricetag-outline"></ion-icon>
-      </ion-thumbnail>
       <ion-label>
         <h2>{{ product.nombre }}</h2>
         <p>{{ product.descripcion }}</p>
-        <p><strong>Precio: ${{ product.precio }}</strong></p>
+        <p><strong>${{ product.precio }}</strong></p>
       </ion-label>
-      <ion-button (click)="agregarAlCarrito(product)" color="primary" slot="end">
+      <ion-button slot="end" color="primary" (click)="agregarAlCarrito(product)">
         Agregar al carrito
       </ion-button>
     </ion-item>
