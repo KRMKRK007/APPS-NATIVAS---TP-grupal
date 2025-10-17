@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, 
   IonButtons, IonBackButton, IonButton, IonIcon, IonAvatar, 
   IonList, IonItem, IonLabel, IonTabBar, IonTabButton, IonFooter, 
-  AlertController } from '@ionic/angular/standalone';
+  AlertController, ModalController } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { SupabaseService } from '../services/supabase.service';
+import { LoginModalComponent } from '../auth/login-modal.component';
 
 @Component({
   selector: 'app-tab4',
@@ -17,11 +18,22 @@ import { SupabaseService } from '../services/supabase.service';
     IonLabel, IonTabBar, IonTabButton],
 })
 export class Tab4Page {
+  isLoggedIn = false;
+
   constructor(
     private alertController: AlertController,
     private router: Router,
-    private supabase: SupabaseService
-  ) {}
+    private supabase: SupabaseService,
+    private modalCtrl: ModalController
+  ) {
+    this.supabase.sessionChanges().subscribe(s => this.isLoggedIn = !!s);
+  }
+
+  async openLoginModal() {
+    const modal = await this.modalCtrl.create({ component: LoginModalComponent });
+    await modal.present();
+    await modal.onDidDismiss(); // si querés reaccionar a role==='success'
+  }
 
   // Navegación
   goToEditProfile() { this.router.navigate(['/edit-profile']); }
@@ -32,7 +44,11 @@ export class Tab4Page {
   async signOut() {
     try {
       await this.supabase.signOut();
-      await this.router.navigate(['/login']);
+      const ok = await this.alertController.create({
+        header: 'Sesión cerrada',
+        buttons: ['OK']
+      });
+      await ok.present();
     } catch (e: any) {
       const alert = await this.alertController.create({
         header: 'Error al cerrar sesión',
