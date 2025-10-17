@@ -15,7 +15,7 @@ export interface CartItem {
 export class CartService {
   private cart: CartItem[] = [];
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
-  private apiUrl = 'http://localhost:3000/api/cart';
+  private apiUrl = 'http://localhost:3000/api/pedidos';
 
   constructor(private http: HttpClient) {}
 

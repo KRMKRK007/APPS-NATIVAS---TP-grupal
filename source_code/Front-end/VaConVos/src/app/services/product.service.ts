@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { SupabaseService } from './supabase.service';
 
 export interface Product {
   id_producto: number;
@@ -16,7 +17,7 @@ export interface Product {
 export class ProductService {
   private apiUrl = 'http://localhost:3000/api/productos';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private supabase: SupabaseService) {}
 
   async getAllProducts(): Promise<Product[]> {
     try {
@@ -31,5 +32,18 @@ export class ProductService {
   async getByCategoryId(idCategoria: number): Promise<Product[]> {
     const all = await this.getAllProducts();
     return all.filter(p => p.id_categoria === idCategoria);
+  }
+
+  // Búsqueda por nombre usando Supabase (ilike)
+  async searchProductsByName(term: string): Promise<Product[]> {
+    const t = (term || '').trim();
+    if (!t) return this.getAllProducts();
+    try {
+      const data = await this.supabase.searchProductsByName(t);
+      return (data as Product[]) || [];
+    } catch (e) {
+      console.error('Search error:', e);
+      return [];
+    }
   }
 }

@@ -1,40 +1,46 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonAvatar, 
-  IonList, 
-  IonItem, 
-  IonLabel, 
-  IonTabBar, 
-  IonTabButton, 
-  IonFooter, 
+  IonButtons, IonBackButton, IonButton, IonIcon, IonAvatar, 
+  IonList, IonItem, IonLabel, IonTabBar, IonTabButton, IonFooter, 
   AlertController } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { SupabaseService } from '../services/supabase.service';
 
 @Component({
   selector: 'app-tab4',
   templateUrl: 'tab4.page.html',
   styleUrls: ['tab4.page.scss'],
+  standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, IonFooter, 
-  IonAvatar, 
-  IonList, 
-  IonItem, 
-  IonLabel, 
-  IonTabBar, 
-  IonTabButton],
+    IonBackButton, IonButton, IonIcon, IonFooter, IonAvatar, IonList, IonItem, 
+    IonLabel, IonTabBar, IonTabButton],
 })
 export class Tab4Page {
-  constructor(private alertController: AlertController) {}
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
+    private supabase: SupabaseService
+  ) {}
 
-  goTo(page: string) {
-    console.log('Navegar a:', page);
-    // Aquí puedes usar router.navigate(['/ruta']) según tus páginas
+  // Navegación
+  goToEditProfile() { this.router.navigate(['/edit-profile']); }
+  goToAddresses()   { this.router.navigate(['/addresses']); }
+  goToPaymentMethods() { this.router.navigate(['/payment-methods']); }
+
+  // Cerrar sesión
+  async signOut() {
+    try {
+      await this.supabase.signOut();
+      await this.router.navigate(['/login']);
+    } catch (e: any) {
+      const alert = await this.alertController.create({
+        header: 'Error al cerrar sesión',
+        message: e?.message || 'Intenta nuevamente',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
   }
 
   // Acción para el botón "Contacto"

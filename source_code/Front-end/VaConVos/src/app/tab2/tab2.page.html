@@ -1,11 +1,6 @@
 <ion-content [fullscreen]="true">
-
   <ion-list>
     <ion-item *ngFor="let item of cartItems; trackBy: trackById">
-      <ion-thumbnail slot="start">
-        <img alt="Producto" src="https://via.placeholder.com/50" />
-      </ion-thumbnail>
-
       <ion-label>
         <h2>{{ item.nombre }}</h2>
         <p>Precio: ${{ item.precio }}</p>
@@ -33,10 +28,11 @@
   <ion-item>
     <ion-label>Método de pago</ion-label>
     <ion-select [(ngModel)]="paymentMethod" placeholder="Selecciona uno">
-      <ion-select-option *ngFor="let option of paymentOptions" [value]="option">{{ option }}</ion-select-option>
+      <ion-select-option *ngFor="let option of paymentOptions" [value]="option">
+        {{ option }}
+      </ion-select-option>
     </ion-select>
   </ion-item>
-
 </ion-content>
 
 <ion-footer>

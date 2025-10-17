@@ -5,63 +5,23 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <ion-list>
-      <!-- Pedido 1 -->
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img src="assets/icon/supermercado-icon.png" alt="Supermercado">
-        </ion-thumbnail>
-        <ion-label>
-          <h2>Pedido #VCV001</h2>
-          <p>Supermercado - 15 productos</p>
-          <p>Entregado: 10/05/2023 - 14:30</p>
-          <p><strong>Total: $45.80</strong></p>
-        </ion-label>
-        <ion-badge color="success" slot="end">Entregado</ion-badge>
-      </ion-item>
+  <ion-list *ngIf="!loading && !error && orders.length">
+    <ion-item *ngFor="let order of orders">
+      <ion-thumbnail slot="start">
+        <img src="assets/icon/supermercado-icon.png" alt="Pedido" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Pedido #{{ order.id }}</h2>
+        <p>Fecha: {{ order.fecha | date:'short' }}</p>
+        <p>Productos: {{ itemsCount(order) }}</p>
+        <p><strong>Total: ${{ order.total }}</strong></p>
+        <p>Método: {{ order.payment_method }}</p>
+      </ion-label>
+      <ion-badge color="success" slot="end">Registrado</ion-badge>
+    </ion-item>
+  </ion-list>
 
-      <!-- Pedido 2 -->
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img src="assets/icon/frutas-icon.png" alt="Frutas y Verduras">
-        </ion-thumbnail>
-        <ion-label>
-          <h2>Pedido #VCV002</h2>
-          <p>Frutas y Verduras - 8 productos</p>
-          <p>Entregado: 08/05/2023 - 11:15</p>
-          <p><strong>Total: $28.50</strong></p>
-        </ion-label>
-        <ion-badge color="success" slot="end">Entregado</ion-badge>
-      </ion-item>
-
-      <!-- Pedido 3 -->
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img src="assets/icon/carnes-icon.png" alt="Carnes">
-        </ion-thumbnail>
-        <ion-label>
-          <h2>Pedido #VCV003</h2>
-          <p>Carnes - 5 productos</p>
-          <p>Entregado: 05/05/2023 - 16:45</p>
-          <p><strong>Total: $62.30</strong></p>
-        </ion-label>
-        <ion-badge color="success" slot="end">Entregado</ion-badge>
-      </ion-item>
-
-      <!-- Pedido 4 -->
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img src="assets/icon/supermercado-icon.png" alt="Supermercado">
-        </ion-thumbnail>
-        <ion-label>
-          <h2>Pedido #VCV004</h2>
-          <p>Supermercado - 12 productos</p>
-          <p>Entregado: 01/05/2023 - 09:20</p>
-          <p><strong>Total: $38.90</strong></p>
-        </ion-label>
-        <ion-badge color="success" slot="end">Entregado</ion-badge>
-      </ion-item>
-    </ion-list>
-  </div>
+  <div class="ion-padding" *ngIf="loading">Cargando...</div>
+  <div class="ion-padding" *ngIf="!loading && error">{{ error }}</div>
+  <div class="ion-padding" *ngIf="!loading && !error && !orders.length">No hay pedidos aún.</div>
 </ion-content>
