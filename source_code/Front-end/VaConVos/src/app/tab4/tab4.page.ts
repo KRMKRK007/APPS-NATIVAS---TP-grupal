@@ -3,11 +3,8 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
-  IonIcon, IonAvatar, IonList, IonItem, IonLabel
+  IonIcon, IonList, IonItem, IonLabel, IonChip
 } from '@ionic/angular/standalone';
-import { FormsModule } from '@angular/forms';
-import { AuthSimService } from '../services/auth-sim.service';
-import { AuthButtonsComponent } from '../shared/auth-buttons.component';
 
 @Component({
   selector: 'app-tab4',
@@ -16,7 +13,7 @@ import { AuthButtonsComponent } from '../shared/auth-buttons.component';
   standalone: true,
   imports: [
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon,
-    IonAvatar, IonList, IonItem, IonLabel, FormsModule, AuthButtonsComponent
+    IonList, IonItem, IonLabel, IonChip
   ],
 })
 export class Tab4Page {

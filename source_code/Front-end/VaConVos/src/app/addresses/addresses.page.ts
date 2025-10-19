@@ -1,17 +1,21 @@
-// filepath: c:\Users\carme\OneDrive\Escritorio\FACULTAD\1er año\2do Cuatrimestre\Apps nativas\Va con vos app\455c6e9a5b66741f37bb968e27a48b9d3fd8107c\source_code\Front-end\VaConVos\src\app\addresses\addresses.page.ts
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {
   IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent,
   IonList, IonItem, IonLabel, IonInput, IonButton
 } from '@ionic/angular/standalone';
-import { FormsModule } from '@angular/forms';
 import { AuthSimService } from '../services/auth-sim.service';
 
 @Component({
   selector: 'app-addresses',
   templateUrl: './addresses.page.html',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent, IonList, IonItem, IonLabel, IonInput, IonButton, FormsModule]
+  imports: [
+    CommonModule, FormsModule,
+    IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent,
+    IonList, IonItem, IonLabel, IonInput, IonButton
+  ]
 })
 export class AddressesPage {
   line1 = '';

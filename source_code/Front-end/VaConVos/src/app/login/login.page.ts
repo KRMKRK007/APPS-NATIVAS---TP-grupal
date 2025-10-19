@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel,
-  IonInput, IonButton, AlertController
+  IonInput, IonButton, IonIcon, IonSpinner, AlertController
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 
@@ -11,8 +12,9 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './login.page.html',
   standalone: true,
   imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel,
-    IonInput, IonButton, FormsModule
+    CommonModule, FormsModule,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel,
+    IonInput, IonButton, IonIcon, IonSpinner
   ],
 })
 export class LoginPage {

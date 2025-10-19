@@ -6,22 +6,45 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  public supabase: SupabaseClient;
+  public supabase!: SupabaseClient;
   private session$ = new BehaviorSubject<Session | null>(null);
 
   constructor() {
     if (!environment.supabaseUrl || !environment.supabaseKey) {
-      throw new Error('Las credenciales de Supabase no están en environment.ts');
+      console.warn('Las credenciales de Supabase no están configuradas en environment.ts');
+      // No inicializar Supabase si no hay credenciales
+      return;
     }
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    
+    try {
+      this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
-    // Sesión inicial y cambios de sesión
-    this.supabase.auth.getSession().then(({ data }) => this.session$.next(data.session ?? null));
-    this.supabase.auth.onAuthStateChange((_event, session) => this.session$.next(session ?? null));
+      // Sesión inicial y cambios de sesión con manejo de errores
+      this.supabase.auth.getSession()
+        .then(({ data }) => this.session$.next(data.session ?? null))
+        .catch(error => {
+          console.warn('Error al obtener sesión de Supabase:', error);
+          this.session$.next(null);
+        });
+        
+      this.supabase.auth.onAuthStateChange((_event, session) => {
+        try {
+          this.session$.next(session ?? null);
+        } catch (error) {
+          console.warn('Error en cambio de estado de auth:', error);
+        }
+      });
+    } catch (error) {
+      console.warn('Error inicializando Supabase:', error);
+    }
   }
 
   // Login
   async signIn(credentials: { email: string; password: string }): Promise<Session | null> {
+    if (!this.supabase) {
+      console.warn('Supabase no está inicializado');
+      return null;
+    }
     const { data, error } = await this.supabase.auth.signInWithPassword(credentials);
     if (error) throw error;
     this.session$.next(data.session ?? null);
@@ -36,6 +59,10 @@ export class SupabaseService {
 
   // Obtener sesión actual
   async getSession(): Promise<Session | null> {
+    if (!this.supabase) {
+      console.warn('Supabase no está inicializado');
+      return null;
+    }
     const { data } = await this.supabase.auth.getSession();
     return data.session ?? null;
   }
@@ -56,7 +83,7 @@ export class SupabaseService {
   async searchProductsByName(term: string) {
     const { data, error } = await this.supabase
       .from('producto')
-      .select('id_producto, nombre, descripcion, precio, id_categoria')
+      .select('id_producto, nombre, descripcion, precio, id_categoria, imagen_url')
       .ilike('nombre', `%${term}%`)
       .order('nombre', { ascending: true });
 

@@ -6,6 +6,48 @@
     <ion-title>Editar perfil</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  Contenido de Edición de Perfil
+<ion-content>
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar">
+          <ion-icon name="person"></ion-icon>
+        </div>
+        <div class="header-info">
+          <h2>Tu perfil</h2>
+          <p>Actualiza tu información personal</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <ion-list>
+          <ion-item class="custom-input">
+            <ion-label position="stacked">Nombre</ion-label>
+            <ion-input placeholder="Tu nombre"></ion-input>
+          </ion-item>
+          <ion-item class="custom-input">
+            <ion-label position="stacked">Apellido</ion-label>
+            <ion-input placeholder="Tu apellido"></ion-input>
+          </ion-item>
+          <ion-item class="custom-input">
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input type="email" placeholder="tucorreo@ejemplo.com"></ion-input>
+          </ion-item>
+          <ion-item class="custom-input">
+            <ion-label position="stacked">Teléfono</ion-label>
+            <ion-input type="tel" placeholder="11 1234-5678"></ion-input>
+          </ion-item>
+          <ion-item class="custom-input">
+            <ion-label position="stacked">Descripción</ion-label>
+            <ion-textarea autoGrow="true" placeholder="Algo sobre vos"></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="actions">
+        <ion-button class="save-btn" expand="block">Guardar cambios</ion-button>
+        <ion-button class="cancel-btn" fill="outline" expand="block" color="medium">Cancelar</ion-button>
+      </div>
+    </div>
+  </div>
 </ion-content>

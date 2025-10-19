@@ -1,2 +1,173 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+// VaConVos - Paleta de Colores Natural y Profesional
+// Inspirada en la naturaleza con tonos verdes frescos y elementos orgánicos
+
+// ===== COLORES PRINCIPALES =====
+:root {
+  // Verde principal - Color primario de la marca
+  --ion-color-primary: #4a7c59;
+  --ion-color-primary-rgb: 74, 124, 89;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #41694e;
+  --ion-color-primary-tint: #5c8966;
+
+  // Verde secundario - Más claro y fresco
+  --ion-color-secondary: #6eb57a;
+  --ion-color-secondary-rgb: 110, 181, 122;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #609f6b;
+  --ion-color-secondary-tint: #7dbc87;
+
+  // Verde terciario - Tono más oscuro y sobrio
+  --ion-color-tertiary: #2d5016;
+  --ion-color-tertiary-rgb: 45, 80, 22;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #284614;
+  --ion-color-tertiary-tint: #42612d;
+
+  // Colores de estado
+  --ion-color-success: #7cb342;
+  --ion-color-success-rgb: 124, 179, 66;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #6d9e3a;
+  --ion-color-success-tint: #89bb55;
+
+  --ion-color-warning: #f4a261;
+  --ion-color-warning-rgb: 244, 162, 97;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #d78e55;
+  --ion-color-warning-tint: #f5ab71;
+
+  --ion-color-danger: #e63946;
+  --ion-color-danger-rgb: 230, 57, 70;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #ca323e;
+  --ion-color-danger-tint: #e94959;
+
+  // Neutros profesionales
+  --ion-color-dark: #1e3a2f;
+  --ion-color-dark-rgb: 30, 58, 47;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1a3229;
+  --ion-color-dark-tint: #354e44;
+
+  --ion-color-medium: #8a9a8a;
+  --ion-color-medium-rgb: 138, 154, 138;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #798879;
+  --ion-color-medium-tint: #96a496;
+
+  --ion-color-light: #f8fdf9;
+  --ion-color-light-rgb: 248, 253, 249;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #dadfdb;
+  --ion-color-light-tint: #f9fdfa;
+
+  // ===== COLORES PERSONALIZADOS ADICIONALES =====
+  
+  // Verde menta suave para acentos
+  --va-color-mint: #a8d5ba;
+  --va-color-mint-light: #c4e3d2;
+  --va-color-mint-dark: #8cc9a5;
+  
+  // Verde oliva para textos importantes
+  --va-color-olive: #556b2f;
+  --va-color-olive-light: #7a8f4c;
+  --va-color-olive-dark: #3d4f21;
+  
+  // Beige natural para fondos suaves
+  --va-color-natural: #f5f5dc;
+  --va-color-natural-light: #fafaf2;
+  --va-color-natural-dark: #e8e8cd;
+  
+  // Grises cálidos
+  --va-color-warm-gray: #6b7062;
+  --va-color-warm-gray-light: #9a9b92;
+  --va-color-warm-gray-dark: #4a4f44;
+
+  // ===== VARIABLES DE TIPOGRAFÍA =====
+  --va-font-family-primary: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --va-font-family-secondary: 'Inter', 'San Francisco', -apple-system, BlinkMacSystemFont, sans-serif;
+  --va-font-family-accent: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+
+  // Tamaños de fuente escalables
+  --va-font-size-xs: 0.75rem;   // 12px
+  --va-font-size-sm: 0.875rem;  // 14px
+  --va-font-size-base: 1rem;    // 16px
+  --va-font-size-lg: 1.125rem;  // 18px
+  --va-font-size-xl: 1.25rem;   // 20px
+  --va-font-size-2xl: 1.5rem;   // 24px
+  --va-font-size-3xl: 1.875rem; // 30px
+
+  // Pesos de fuente
+  --va-font-weight-light: 300;
+  --va-font-weight-normal: 400;
+  --va-font-weight-medium: 500;
+  --va-font-weight-semibold: 600;
+  --va-font-weight-bold: 700;
+
+  // ===== ESPACIADO Y DIMENSIONES =====
+  --va-spacing-xs: 0.25rem;   // 4px
+  --va-spacing-sm: 0.5rem;    // 8px
+  --va-spacing-md: 1rem;      // 16px
+  --va-spacing-lg: 1.5rem;    // 24px
+  --va-spacing-xl: 2rem;      // 32px
+  --va-spacing-2xl: 3rem;     // 48px
+
+  // Radios de borde orgánicos
+  --va-border-radius-sm: 6px;
+  --va-border-radius-md: 12px;
+  --va-border-radius-lg: 20px;
+  --va-border-radius-xl: 28px;
+  --va-border-radius-full: 50px;
+
+  // Sombras sutiles y naturales
+  --va-shadow-sm: 0 1px 3px rgba(74, 124, 89, 0.12), 0 1px 2px rgba(74, 124, 89, 0.08);
+  --va-shadow-md: 0 4px 6px rgba(74, 124, 89, 0.12), 0 2px 4px rgba(74, 124, 89, 0.08);
+  --va-shadow-lg: 0 10px 15px rgba(74, 124, 89, 0.12), 0 4px 6px rgba(74, 124, 89, 0.08);
+  --va-shadow-xl: 0 20px 25px rgba(74, 124, 89, 0.12), 0 10px 10px rgba(74, 124, 89, 0.04);
+
+  // ===== GRADIENTES NATURALES =====
+  --va-gradient-primary: linear-gradient(135deg, #4a7c59 0%, #6eb57a 100%);
+  --va-gradient-secondary: linear-gradient(135deg, #6eb57a 0%, #a8d5ba 100%);
+  --va-gradient-accent: linear-gradient(135deg, #7cb342 0%, #9ccc65 100%);
+  --va-gradient-subtle: linear-gradient(135deg, #f8fdf9 0%, #f5f5dc 100%);
+
+  // ===== TRANSICIONES SUAVES =====
+  --va-transition-fast: 0.15s ease-out;
+  --va-transition-normal: 0.25s ease-out;
+  --va-transition-slow: 0.4s ease-out;
+}
+
+// ===== MODO OSCURO =====
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Ajustar colores para modo oscuro manteniendo la identidad verde
+    --ion-color-primary: #6eb57a;
+    --ion-color-primary-rgb: 110, 181, 122;
+    --ion-color-primary-shade: #609f6b;
+    --ion-color-primary-tint: #7dbc87;
+
+    --ion-color-light: #1e3a2f;
+    --ion-color-light-rgb: 30, 58, 47;
+    --ion-color-light-contrast: #ffffff;
+    --ion-color-light-contrast-rgb: 255, 255, 255;
+
+    --ion-color-dark: #f8fdf9;
+    --ion-color-dark-rgb: 248, 253, 249;
+    --ion-color-dark-contrast: #000000;
+    --ion-color-dark-contrast-rgb: 0, 0, 0;
+
+    --va-color-natural: #2a3e2a;
+    --va-color-natural-light: #354535;
+    --va-color-natural-dark: #1f2d1f;
+  }
+}

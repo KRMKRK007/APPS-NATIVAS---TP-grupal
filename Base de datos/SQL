@@ -87,7 +87,8 @@ CREATE TABLE Producto (
     Descripcion TEXT,
     Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0),
     ID_Categoria INT NOT NULL,
-    FOREIGN KEY (ID_Categoria) REFERENCES Categoria(ID_Categoria)
+    FOREIGN KEY (ID_Categoria) REFERENCES Categoria(ID_Categoria),
+    Imagen_url VARCHAR(255)
 );
 
 CREATE TABLE Usuario (

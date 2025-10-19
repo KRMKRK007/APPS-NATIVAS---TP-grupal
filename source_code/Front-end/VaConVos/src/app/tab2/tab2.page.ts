@@ -3,14 +3,15 @@ import {
   IonHeader, IonToolbar, IonTitle, IonContent,
   IonButtons, IonBackButton, IonButton, IonIcon,
   IonList, IonItem, IonLabel, IonThumbnail,
-  IonFooter, IonTabBar, IonTabButton, IonSelect, IonSelectOption, IonBadge
+  IonFooter, IonTabBar, IonTabButton, IonSelect, IonSelectOption, IonBadge,
+  IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonImg
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { CartService, CartItem } from '../services/cart.service';
 import { AlertController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { OrderService } from '../services/order.service';
 import { Subscription } from 'rxjs';
 
@@ -24,7 +25,8 @@ import { Subscription } from 'rxjs';
     IonButtons, IonBackButton, IonButton, IonIcon,
     IonList, IonItem, IonLabel, IonThumbnail,
     IonFooter, IonTabBar, IonTabButton, IonSelect, IonSelectOption, IonBadge,
-    ExploreContainerComponent, CommonModule, FormsModule
+    IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonImg,
+    ExploreContainerComponent, CommonModule, FormsModule, RouterModule
   ]
 })
 export class Tab2Page implements OnDestroy {
@@ -60,6 +62,28 @@ export class Tab2Page implements OnDestroy {
   }
   remove(item: CartItem) {
     this.cartService.removeItem(item.id_producto);
+  }
+
+  // Vaciar carrito completo
+  async clearCart() {
+    const alert = await this.alertCtrl.create({
+      header: 'Vaciar carrito',
+      message: '¿Estás seguro de que quieres eliminar todos los productos del carrito?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Vaciar',
+          role: 'destructive',
+          handler: () => {
+            this.cartService.clearCart();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   // Totales
@@ -109,5 +133,13 @@ export class Tab2Page implements OnDestroy {
 
   trackById(_: number, item: CartItem) {
     return item.id_producto;
+  }
+
+  // Fallback de imagen para ion-img en carrito
+  setDefaultImage(ev: CustomEvent) {
+    const imgEl = ev?.target as HTMLImageElement | any;
+    if (imgEl && 'src' in imgEl) {
+      imgEl.src = 'assets/images/placeholder.svg';
+    }
   }
 }

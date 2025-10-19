@@ -5,8 +5,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export interface CartItem {
   id_producto: number;
   nombre: string;
+  descripcion?: string;
   precio: number;
   cantidad: number;
+  imagen_url?: string;
 }
 
 @Injectable({
@@ -40,8 +42,10 @@ export class CartService {
       this.cart.push({
         id_producto: product.id_producto,
         nombre: product.nombre,
+        descripcion: product.descripcion || '',
         precio: product.precio,
-        cantidad: 1
+        cantidad: 1,
+        imagen_url: product.imagen_url
       });
     }
     this.emit();

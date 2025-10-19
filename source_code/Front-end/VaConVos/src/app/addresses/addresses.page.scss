@@ -1,0 +1,121 @@
+// ===== PÁGINA: DIRECCIONES =====
+
+ion-content {
+	--background: var(--va-gradient-subtle);
+	padding: var(--va-spacing-md);
+}
+
+.addresses-container {
+	width: 100%;
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+// Formulario agregar dirección
+.address-form {
+	background: white;
+	border-radius: var(--va-border-radius-xl);
+	box-shadow: var(--va-shadow-lg);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	padding: var(--va-spacing-lg);
+	margin-bottom: var(--va-spacing-xl);
+
+	.section-title {
+		display: flex;
+		align-items: center;
+		gap: var(--va-spacing-xs);
+		margin: 0 0 var(--va-spacing-sm) 0;
+		font-family: var(--va-font-family-accent);
+		font-size: var(--va-font-size-lg);
+		font-weight: var(--va-font-weight-bold);
+		color: var(--ion-color-dark);
+	}
+
+	ion-list { background: transparent; padding: 0; }
+
+	ion-item {
+			--background: white; // alto contraste
+		--border-radius: var(--va-border-radius-md);
+			border: 1px solid rgba(0, 0, 0, 0.12);
+		transition: var(--va-transition-normal);
+		margin-bottom: var(--va-spacing-sm);
+
+			&.item-has-focus { 
+				--background: white; 
+				border-color: var(--ion-color-primary); 
+				box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.12); 
+			}
+
+			ion-label {
+			font-family: var(--va-font-family-secondary);
+			font-weight: var(--va-font-weight-medium);
+			font-size: var(--va-font-size-sm);
+				color: var(--ion-color-dark); // mejor legibilidad
+			margin-bottom: var(--va-spacing-xs);
+		}
+
+			&.ng-invalid.ng-touched { border-color: var(--ion-color-danger); }
+	}
+
+	ion-button {
+		--background: var(--va-gradient-primary);
+		--color: white;
+		--border-radius: var(--va-border-radius-md);
+		--box-shadow: var(--va-shadow-md);
+		--height: 48px;
+		font-family: var(--va-font-family-secondary);
+		font-weight: var(--va-font-weight-semibold);
+		text-transform: none;
+			transition: var(--va-transition-fast);
+			&:hover { --box-shadow: var(--va-shadow-lg); transform: translateY(-1px); }
+	}
+}
+
+// Lista de direcciones guardadas
+.saved-addresses {
+	background: white;
+	border-radius: var(--va-border-radius-xl);
+	box-shadow: var(--va-shadow-md);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	padding: var(--va-spacing-sm);
+
+	ion-item {
+		--background: transparent;
+		border-radius: var(--va-border-radius-md);
+		margin: 2px 0;
+			position: relative;
+
+					&::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 8px;
+				bottom: 8px;
+				width: 4px;
+				border-radius: 4px;
+						background: var(--ion-color-primary);
+						opacity: 0.6; // barra más visible
+			}
+
+		ion-label { 
+			font-size: var(--va-font-size-base); 
+			color: var(--ion-color-dark); 
+		}
+
+		ion-button[color="danger"] { 
+			--border-radius: var(--va-border-radius-full);
+			--padding-start: var(--va-spacing-sm);
+			--padding-end: var(--va-spacing-sm);
+				transition: var(--va-transition-fast);
+			}
+			ion-button[color="danger"]:hover { 
+				filter: brightness(0.95);
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	ion-content { padding: var(--va-spacing-sm); }
+	.address-form { padding: var(--va-spacing-md); }
+}
+

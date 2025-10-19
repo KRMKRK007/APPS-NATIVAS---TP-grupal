@@ -14,6 +14,5 @@ export const routes: Routes = [
       { path: '', redirectTo: 'tab1', pathMatch: 'full' },
     ]
   },
-  { path: 'products/:categoria', loadComponent: () => import('../products/products.page').then(m => m.ProductsPage) },
   { path: '**', redirectTo: 'tabs/tab1' }
 ];

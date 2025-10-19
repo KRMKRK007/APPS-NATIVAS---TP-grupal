@@ -1,27 +1,167 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Historial de Pedidos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="va-gradient-text">
+        <ion-icon name="receipt-outline" class="history-icon"></ion-icon>
+        Mis Pedidos
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="refreshOrders()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-list *ngIf="!loading && !error && orders.length">
-    <ion-item *ngFor="let order of orders">
-      <ion-thumbnail slot="start">
-        <img src="assets/icon/supermercado-icon.png" alt="Pedido" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>Pedido #{{ order.id }}</h2>
-        <p>Fecha: {{ order.fecha | date:'short' }}</p>
-        <p>Productos: {{ itemsCount(order) }}</p>
-        <p><strong>Total: ${{ order.total }}</strong></p>
-        <p>Método: {{ order.payment_method }}</p>
-      </ion-label>
-      <ion-badge color="success" slot="end">Registrado</ion-badge>
-    </ion-item>
-  </ion-list>
+<ion-content class="orders-content">
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading-state va-animate-fade-in-up">
+    <div class="loading-container">
+      <ion-spinner name="crescent" class="loading-spinner"></ion-spinner>
+      <p>Cargando tus pedidos...</p>
+    </div>
+  </div>
 
-  <div class="ion-padding" *ngIf="loading">Cargando...</div>
-  <div class="ion-padding" *ngIf="!loading && error">{{ error }}</div>
-  <div class="ion-padding" *ngIf="!loading && !error && !orders.length">No hay pedidos aún.</div>
+  <!-- Estado de error -->
+  <div *ngIf="!loading && error" class="error-state va-animate-fade-in-up">
+    <div class="error-icon-container">
+      <ion-icon name="alert-circle-outline" class="error-icon"></ion-icon>
+    </div>
+    <h3>Error al cargar pedidos</h3>
+    <p>{{ error }}</p>
+    <ion-button fill="outline" (click)="refreshOrders()" class="retry-btn">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Intentar de nuevo
+    </ion-button>
+  </div>
+
+  <!-- Estado vacío -->
+  <div *ngIf="!loading && !error && orders.length === 0" class="empty-orders-state va-animate-fade-in-up">
+    <div class="empty-icon-container">
+      <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
+    </div>
+    <h3>No tienes pedidos aún</h3>
+    <p>Cuando realices tu primera compra, aparecerá aquí tu historial</p>
+    <ion-button fill="outline" routerLink="/tabs/tab1" class="start-shopping-btn">
+      <ion-icon name="storefront-outline" slot="start"></ion-icon>
+      Comenzar a comprar
+    </ion-button>
+  </div>
+
+  <!-- Lista de pedidos -->
+  <div *ngIf="!loading && !error && orders.length > 0" class="orders-container">
+    <!-- Estadísticas rápidas -->
+    <div class="orders-stats va-animate-fade-in-up">
+      <div class="stat-card">
+        <div class="stat-number">{{ orders.length }}</div>
+        <div class="stat-label">Pedidos totales</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">${{ getTotalSpent() }}</div>
+        <div class="stat-label">Total gastado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ getTotalItems() }}</div>
+        <div class="stat-label">Productos comprados</div>
+      </div>
+    </div>
+
+    <!-- Lista de órdenes -->
+    <div class="orders-list">
+      <ion-card 
+        class="order-card va-animate-scale-in" 
+        *ngFor="let order of orders; let i = index"
+        [style.animation-delay]="(i * 0.1) + 's'"
+        (click)="expandOrder(order)">
+        
+        <!-- Header de la orden -->
+        <div class="order-header">
+          <div class="order-info">
+            <div class="order-id-section">
+              <h3 class="order-number">Pedido #{{ order.id }}</h3>
+              <ion-badge class="order-status" color="success">
+                <ion-icon name="checkmark-circle" class="status-icon"></ion-icon>
+                Completado
+              </ion-badge>
+            </div>
+            <div class="order-date">
+              {{ formatDate(order.fecha) }}
+            </div>
+          </div>
+          <div class="order-total">
+            <span class="total-amount">${{ order.total }}</span>
+          </div>
+        </div>
+
+        <!-- Información de la orden -->
+        <ion-card-content class="order-content">
+          <div class="order-details">
+            <div class="detail-item">
+              <ion-icon name="basket-outline" class="detail-icon"></ion-icon>
+              <div class="detail-info">
+                <span class="detail-label">Productos</span>
+                <span class="detail-value">{{ itemsCount(order) }} artículos</span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <ion-icon name="card-outline" class="detail-icon"></ion-icon>
+              <div class="detail-info">
+                <span class="detail-label">Pago</span>
+                <span class="detail-value">{{ order.payment_method }}</span>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <ion-icon name="time-outline" class="detail-icon"></ion-icon>
+              <div class="detail-info">
+                <span class="detail-label">Hora</span>
+                <span class="detail-value">{{ formatTime(order.fecha) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lista de productos (expandible) -->
+          <div class="order-items" *ngIf="order.expanded">
+            <div class="items-header">
+              <h4>Productos del pedido</h4>
+            </div>
+            <div class="item-list">
+              <div class="order-item" *ngFor="let item of order.items">
+                <div class="item-image">
+                  <div class="product-image-placeholder">
+                    <ion-img [src]="item.imagen_url || 'assets/images/placeholder.svg'" [alt]="item.nombre" (ionError)="setDefaultImage($event)"></ion-img>
+                  </div>
+                </div>
+                <div class="item-details">
+                  <h5 class="item-name">{{ item.nombre }}</h5>
+                  <div class="item-quantity-price">
+                    <span class="quantity">{{ item.cantidad }}x</span>
+                    <span class="price">${{ item.precio }}</span>
+                  </div>
+                </div>
+                <div class="item-subtotal">
+                  ${{ item.precio * item.cantidad }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón para expandir/contraer -->
+          <ion-button 
+            fill="clear" 
+            expand="block" 
+            class="expand-btn"
+            (click)="toggleOrderExpansion(order, $event)">
+            <span>{{ order.expanded ? 'Ver menos' : 'Ver productos' }}</span>
+            <ion-icon 
+              [name]="order.expanded ? 'chevron-up-outline' : 'chevron-down-outline'" 
+              slot="end">
+            </ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

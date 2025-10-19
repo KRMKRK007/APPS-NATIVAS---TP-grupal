@@ -32,7 +32,7 @@ app.get('/api/health', async (_req, res) => {
 app.get('/api/productos', async (_req, res) => {
   try {
     const { rows } = await pool.query(`
-      SELECT id_producto, nombre, descripcion, precio, id_categoria
+      SELECT id_producto, nombre, descripcion, precio, id_categoria, imagen_url
       FROM producto
       ORDER BY id_producto
     `);
