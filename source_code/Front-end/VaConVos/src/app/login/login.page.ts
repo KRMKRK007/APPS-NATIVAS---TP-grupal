@@ -5,7 +5,6 @@ import {
   IonInput, IonButton, AlertController
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
-import { SupabaseService } from '../services/supabase.service';
 
 @Component({
   selector: 'app-login',
@@ -21,31 +20,24 @@ export class LoginPage {
   password = '';
   loading = false;
 
-  constructor(
-    private supabase: SupabaseService,
-    private router: Router,
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private router: Router, private alertCtrl: AlertController) {}
 
   async login() {
-    if (!this.email || !this.password) return;
     this.loading = true;
-    try {
-      await this.supabase.signIn({ email: this.email, password: this.password });
-      await this.router.navigate(['/tabs/tab1']);
-    } catch (e: any) {
-      const alert = await this.alertCtrl.create({
-        header: 'Error de inicio de sesión',
-        message: e?.message || 'Credenciales inválidas',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    } finally {
-      this.loading = false;
-    }
+    // Simulación de login: guarda bandera en sessionStorage
+    sessionStorage.setItem('sim_auth', '1');
+    sessionStorage.setItem('sim_user_email', this.email || 'user@example.com');
+
+    const ok = await this.alertCtrl.create({
+      header: 'Sesión iniciada',
+      message: 'Login simulado exitoso.',
+      buttons: ['OK'],
+    });
+    await ok.present();
+
+    await this.router.navigate(['/tabs/tab1']);
+    this.loading = false;
   }
 
-  goToRegister() {
-    this.router.navigate(['/register']);
-  }
+  goToRegister() { this.router.navigate(['/register']); }
 }

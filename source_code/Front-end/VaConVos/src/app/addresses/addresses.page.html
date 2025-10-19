@@ -1,11 +1,21 @@
+<!-- filepath: c:\Users\carme\OneDrive\Escritorio\FACULTAD\1er año\2do Cuatrimestre\Apps nativas\Va con vos app\455c6e9a5b66741f37bb968e27a48b9d3fd8107c\source_code\Front-end\VaConVos\src\app\addresses\addresses.page.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
-    </ion-buttons>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/tabs/tab4"></ion-back-button></ion-buttons>
     <ion-title>Mis direcciones</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  Aquí podrás gestionar tus direcciones.
+  <ion-list>
+    <ion-item><ion-label position="stacked">Dirección</ion-label><ion-input [(ngModel)]="line1"></ion-input></ion-item>
+    <ion-item><ion-label position="stacked">Ciudad</ion-label><ion-input [(ngModel)]="city"></ion-input></ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="add()">Agregar</ion-button>
+
+  <ion-list *ngIf="addresses.length">
+    <ion-item *ngFor="let a of addresses">
+      <ion-label>{{ a.line1 }} <small *ngIf="a.city">- {{ a.city }}</small></ion-label>
+      <ion-button slot="end" color="danger" (click)="remove(a.id)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

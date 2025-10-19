@@ -1,14 +1,9 @@
 import { CanMatchFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { SupabaseService } from '../services/supabase.service';
+import { AuthSimService } from '../services/auth-sim.service';
 
-export const authGuard: CanMatchFn = async () => {
-  const supabase = inject(SupabaseService);
+export const simAuthGuard: CanMatchFn = () => {
+  const auth = inject(AuthSimService);
   const router = inject(Router);
-  try {
-    const session = await supabase.getSession();
-    return !!session || router.createUrlTree(['/login']);
-  } catch {
-    return router.createUrlTree(['/login']);
-  }
+  return auth.estaAutenticado() || router.createUrlTree(['/login']);
 };

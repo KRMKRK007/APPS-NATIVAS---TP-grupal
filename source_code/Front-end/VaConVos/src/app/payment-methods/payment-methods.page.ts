@@ -1,12 +1,12 @@
+// filepath: c:\Users\carme\OneDrive\Escritorio\FACULTAD\1er año\2do Cuatrimestre\Apps nativas\Va con vos app\455c6e9a5b66741f37bb968e27a48b9d3fd8107c\source_code\Front-end\VaConVos\src\app\payment-methods\payment-methods.page.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent,
-  IonList, IonItem, IonLabel, IonInput, IonButton, IonIcon
+  IonList, IonItem, IonLabel, IonInput, IonButton
 } from '@ionic/angular/standalone';
-import { AlertController } from '@ionic/angular';
-import { SupabaseService } from '../services/supabase.service';
 import { CommonModule } from '@angular/common';
+import { AuthSimService } from '../services/auth-sim.service';
 
 @Component({
   selector: 'app-payment-methods',
@@ -14,14 +14,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [
     IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent,
-    IonList, IonItem, IonLabel, IonInput, IonButton, IonIcon,
-    ReactiveFormsModule, CommonModule
+    IonList, IonItem, IonLabel, IonInput, IonButton, ReactiveFormsModule, CommonModule
   ]
 })
 export class PaymentMethodsPage implements OnInit {
   saving = false;
-  userId: string | null = null;
-  methods: Array<{ id_mediopago: number; tipo: string; numero_enmarcado: string; vencimiento: string }> = [];
+  methods = this.auth.listPaymentMethods();
 
   cardForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
@@ -30,20 +28,11 @@ export class PaymentMethodsPage implements OnInit {
     cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
   });
 
-  constructor(
-    private fb: FormBuilder,
-    private supabase: SupabaseService,
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private fb: FormBuilder, private auth: AuthSimService) {}
 
-  async ngOnInit() {
-    this.userId = await this.supabase.getCurrentUserId();
-    if (this.userId) {
-      this.methods = await this.supabase.listPaymentMethods(this.userId);
-    }
-  }
+  ngOnInit(): void {}
 
-  private detectBrand(num: string): string {
+  private brand(num: string): string {
     const n = num.replace(/\s+/g, '');
     if (/^4\d{12,18}$/.test(n)) return 'Visa';
     if (/^(5[1-5]\d{14}|2(2[2-9]\d|[3-6]\d{2}|7[01]\d|720)\d{12})$/.test(n)) return 'MasterCard';
@@ -52,54 +41,21 @@ export class PaymentMethodsPage implements OnInit {
     return 'Tarjeta';
   }
 
-  async onSubmit() {
-    if (this.cardForm.invalid) {
-      this.cardForm.markAllAsTouched();
-      return;
-    }
-    if (!this.userId) {
-      const a = await this.alertCtrl.create({
-        header: 'Inicia sesión',
-        message: 'Debes iniciar sesión para guardar un método de pago.',
-        buttons: ['OK']
-      });
-      await a.present();
-      return;
-    }
-
+  onSubmit() {
+    if (this.cardForm.invalid) { this.cardForm.markAllAsTouched(); return; }
     this.saving = true;
-    const { name, number, expiry } = this.cardForm.value as any;
+    const { number, expiry } = this.cardForm.value as any;
     const clean = (number as string).replace(/\s+/g, '');
-    const last4 = clean.slice(-4);
-    const brand = this.detectBrand(clean);
-
-    try {
-      await this.supabase.addPaymentMethod(this.userId, {
-        type: brand,
-        last4,
-        expiry
-      });
-      const ok = await this.alertCtrl.create({
-        header: 'Guardado',
-        message: `Se guardó ${brand} •••• ${last4}`,
-        buttons: ['OK']
-      });
-      await ok.present();
-
-      // refrescar lista
-      this.methods = await this.supabase.listPaymentMethods(this.userId);
-      this.cardForm.reset();
-    } catch (e: any) {
-      const err = await this.alertCtrl.create({
-        header: 'Error',
-        message: e?.message || 'No se pudo guardar el método.',
-        buttons: ['OK']
-      });
-      await err.present();
-    } finally {
-      this.saving = false;
-    }
+    this.auth.addPaymentMethod({ tipo: this.brand(clean), last4: clean.slice(-4), vencimiento: expiry });
+    this.methods = this.auth.listPaymentMethods();
+    this.cardForm.reset();
+    this.saving = false;
   }
 
-  trackById(_: number, m: any) { return m.id_mediopago; }
+  remove(id: number) {
+    this.auth.removePaymentMethod(id);
+    this.methods = this.auth.listPaymentMethods();
+  }
+
+  trackById(_: number, m: any) { return m.id; }
 }

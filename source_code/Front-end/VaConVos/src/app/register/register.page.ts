@@ -1,3 +1,4 @@
+// filepath: c:\Users\carme\OneDrive\Escritorio\FACULTAD\1er año\2do Cuatrimestre\Apps nativas\Va con vos app\455c6e9a5b66741f37bb968e27a48b9d3fd8107c\source_code\Front-end\VaConVos\src\app\register\register.page.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -5,53 +6,31 @@ import {
   IonInput, IonButton, AlertController
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
-import { SupabaseService } from '../services/supabase.service';
+import { AuthSimService } from '../services/auth-sim.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   standalone: true,
-  imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel,
-    IonInput, IonButton, FormsModule
-  ],
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonInput, IonButton, FormsModule],
 })
 export class RegisterPage {
+  name = '';
   email = '';
   password = '';
   loading = false;
 
-  constructor(
-    private supabase: SupabaseService,
-    private router: Router,
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private auth: AuthSimService, private router: Router, private alert: AlertController) {}
 
   async register() {
-    if (!this.email || !this.password) return;
     this.loading = true;
-    try {
-      await this.supabase.signUp({ email: this.email, password: this.password });
-      const ok = await this.alertCtrl.create({
-        header: 'Registro exitoso',
-        message: 'Revisa tu correo para confirmar la cuenta.',
-        buttons: ['OK'],
-      });
-      await ok.present();
-      await this.router.navigate(['/login']);
-    } catch (e: any) {
-      const alert = await this.alertCtrl.create({
-        header: 'Error de registro',
-        message: e?.message || 'No se pudo crear la cuenta',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    } finally {
-      this.loading = false;
-    }
+    this.auth.saveProfile({ name: this.name || 'Usuario', email: this.email });
+    await this.auth.loginSimulado(this.email, this.password);
+    const ok = await this.alert.create({ header: 'Registro simulado', message: 'Cuenta creada localmente.', buttons: ['OK'] });
+    await ok.present();
+    this.router.navigate(['/tabs/tab1']);
+    this.loading = false;
   }
 
-  goToLogin() {
-    this.router.navigate(['/login']);
-  }
+  goToLogin() { this.router.navigate(['/login']); }
 }

@@ -1,8 +1,7 @@
+<!-- filepath: c:\Users\carme\OneDrive\Escritorio\FACULTAD\1er año\2do Cuatrimestre\Apps nativas\Va con vos app\455c6e9a5b66741f37bb968e27a48b9d3fd8107c\source_code\Front-end\VaConVos\src\app\payment-methods\payment-methods.page.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
-    </ion-buttons>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/tabs/tab4"></ion-back-button></ion-buttons>
     <ion-title>Métodos de pago</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,42 +9,22 @@
 <ion-content class="ion-padding">
   <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
     <ion-list>
-      <ion-item>
-        <ion-label position="stacked">Nombre del titular</ion-label>
-        <ion-input formControlName="name" autocomplete="cc-name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Número de tarjeta</ion-label>
-        <ion-input formControlName="number" inputmode="numeric" autocomplete="cc-number" placeholder="•••• •••• •••• ••••"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Vencimiento (MM/AA)</ion-label>
-        <ion-input formControlName="expiry" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">CVV</ion-label>
-        <ion-input formControlName="cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="***"></ion-input>
-      </ion-item>
+      <ion-item><ion-label position="stacked">Nombre del titular</ion-label><ion-input formControlName="name"></ion-input></ion-item>
+      <ion-item><ion-label position="stacked">Número de tarjeta</ion-label><ion-input formControlName="number" inputmode="numeric" placeholder="•••• •••• •••• ••••"></ion-input></ion-item>
+      <ion-item><ion-label position="stacked">Vencimiento (MM/AA)</ion-label><ion-input formControlName="expiry" inputmode="numeric" placeholder="MM/AA"></ion-input></ion-item>
+      <ion-item><ion-label position="stacked">CVV</ion-label><ion-input formControlName="cvv" type="password" inputmode="numeric" placeholder="***"></ion-input></ion-item>
     </ion-list>
-
-    <ion-button expand="block" type="submit" [disabled]="saving || cardForm.invalid">
-      Guardar método de pago
-    </ion-button>
-
-    <p class="ion-text-center ion-padding-top" style="font-size: 12px;">
-      Por seguridad, solo se guarda el tipo de tarjeta, últimos 4 dígitos y vencimiento.
-    </p>
+    <ion-button expand="block" type="submit" [disabled]="saving || cardForm.invalid">Guardar método de pago</ion-button>
+    <p class="ion-text-center ion-padding-top" style="font-size:12px">Se guardan solo últimos 4 dígitos y vencimiento.</p>
   </form>
 
   <ion-list *ngIf="methods.length">
-    <ion-item lines="full" *ngFor="let m of methods; trackBy: trackById">
+    <ion-item *ngFor="let m of methods; trackBy: trackById">
       <ion-label>
-        <h2>{{ m.tipo }} •••• {{ m.numero_enmarcado }}</h2>
+        <h2>{{ m.tipo }} •••• {{ m.last4 }}</h2>
         <p>Vence: {{ m.vencimiento }}</p>
       </ion-label>
+      <ion-button slot="end" color="danger" (click)="remove(m.id)">Eliminar</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
