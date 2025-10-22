@@ -145,10 +145,11 @@ ion-content {
 				--border-radius: var(--va-border-radius-full);
 				--padding-start: var(--va-spacing-sm);
 				--padding-end: var(--va-spacing-sm);
-					transition: var(--va-transition-fast);
-				}
-				ion-button[color="danger"]:hover {
+				transition: var(--va-transition-fast);
+
+				&:hover {
 					filter: brightness(0.95);
+				}
 			}
 		}
 	}

@@ -12,7 +12,7 @@ ion-content {
 }
 
 .profile-card {
-	background: white;
+	background: rgb(198, 223, 167);
 	border-radius: var(--va-border-radius-xl);
 	box-shadow: var(--va-shadow-lg);
 	border: 1px solid rgba(0, 0, 0, 0.12);
@@ -22,6 +22,7 @@ ion-content {
 
 .profile-header {
 	display: flex;
+		background: rgb(198, 223, 167);
 	align-items: center;
 	gap: var(--va-spacing-md);
 	margin-bottom: var(--va-spacing-lg);

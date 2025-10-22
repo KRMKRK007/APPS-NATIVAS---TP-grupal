@@ -107,12 +107,10 @@
     }
     
     .product-image-placeholder {
-      height: 60px;
+      height: 150px;
       background: var(--va-gradient-secondary);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      position: ceil($number: 0);
       
       .product-favorite {
         position: absolute;

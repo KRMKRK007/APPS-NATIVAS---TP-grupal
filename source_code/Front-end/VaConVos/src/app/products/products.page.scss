@@ -191,6 +191,7 @@
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: var(--va-spacing-sm);
+
         
         .product-name {
           font-family: var(--va-font-family-accent);
@@ -201,6 +202,7 @@
           line-height: 1.3;
           flex: 1;
           margin-right: var(--va-spacing-sm);
+          color: black;
         }
         
         .product-rating {
