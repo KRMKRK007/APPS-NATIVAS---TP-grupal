@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ categoria }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="products-content">
+  <!-- Filtros rápidos -->
+  <div class="filters-section va-animate-fade-in-up">
+    <ion-segment value="todos" class="category-segment">
+      <ion-segment-button value="todos">
+        <ion-label>Todos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="oferta">
+        <ion-label>En Oferta</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="nuevo">
+        <ion-label>Nuevos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Estado vacío mejorado -->
+  <div *ngIf="products.length === 0" class="empty-products-state va-animate-fade-in-up">
+    <div class="empty-icon-container">
+      <ion-icon name="basket-outline" class="empty-icon"></ion-icon>
+    </div>
+    <h3>Sin productos disponibles</h3>
+    <p>No encontramos productos en esta categoría por el momento.</p>
+    <ion-button fill="outline" routerLink="/tabs/tab1">
+      <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+      Volver al inicio
+    </ion-button>
+  </div>
+
+  <!-- Lista de productos mejorada -->
+  <div *ngIf="products.length > 0" class="products-grid va-animate-fade-in-up">
+    <ion-card 
+      class="product-card va-animate-scale-in" 
+      *ngFor="let product of products; let i = index" 
+      [style.animation-delay]="(i * 0.1) + 's'">
+      
+      <!-- Imagen del producto -->
+      <div class="product-image-container">
+        <!-- Badge removido temporalmente hasta implementar la propiedad -->
+        <div class="product-favorite">
+          <ion-button 
+            fill="clear" 
+            size="small" 
+            class="favorite-btn"
+            (click)="toggleFavorite(product, $event)"
+            [class.is-favorite]="isFavorite(product)">
+            <ion-icon [name]="isFavorite(product) ? 'heart' : 'heart-outline'"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="product-image-placeholder">
+          <ion-img [src]="product.imagen_url || 'assets/images/placeholder.svg'" [alt]="product.nombre" (ionError)="setDefaultImage($event)"></ion-img>
+        </div>
+      </div>
+
+      <!-- Información del producto -->
+      <ion-card-content class="product-content">
+        <div class="product-header">
+          <h3 class="product-name">{{ product.nombre }}</h3>
+          <div class="product-rating">
+            <ion-icon name="star" class="star-filled"></ion-icon>
+            <ion-icon name="star" class="star-filled"></ion-icon>
+            <ion-icon name="star" class="star-filled"></ion-icon>
+            <ion-icon name="star" class="star-filled"></ion-icon>
+            <ion-icon name="star-outline" class="star-empty"></ion-icon>
+            <span class="rating-text">(4.2)</span>
+          </div>
+        </div>
+        
+        <p class="product-description">{{ product.descripcion }}</p>
+        
+        <div class="product-details">
+          <div class="product-price-container">
+            <span class="product-price">${{ product.precio }}</span>
+            <!-- Unidad removida temporalmente hasta implementar la propiedad -->
+          </div>
+          
+          <div class="product-availability">
+            <ion-icon name="checkmark-circle" class="available-icon"></ion-icon>
+            <span>Disponible</span>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="product-actions">
+          <ion-button 
+            fill="solid" 
+            expand="block" 
+            class="add-to-cart-main"
+            (click)="agregarAlCarrito(product)">
+            <ion-icon name="basket-outline" slot="start"></ion-icon>
+            Agregar al Carrito
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

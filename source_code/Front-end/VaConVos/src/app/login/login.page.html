@@ -1,0 +1,83 @@
+<!-- filepath: c:\Users\carme\OneDrive\Escritorio\FACULTAD\1er año\2do Cuatrimestre\Apps nativas\Va con vos app\455c6e9a5b66741f37bb968e27a48b9d3fd8107c\source_code\Front-end\VaConVos\src\app\login\login.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="login-content">
+  <div class="login-container va-animate-fade-in-up">
+    
+    <!-- Logo y bienvenida -->
+    <div class="welcome-section">
+      <div class="logo-container">
+        <ion-icon name="leaf" class="logo-icon"></ion-icon>
+      </div>
+      <h1 class="welcome-title va-gradient-text">VaConVos</h1>
+      <p class="welcome-subtitle">Tu compañero natural para las compras</p>
+    </div>
+
+    <!-- Formulario de login -->
+    <form class="login-form va-animate-scale-in">
+      <div class="form-group">
+        <ion-item class="custom-input" lines="none">
+          <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label position="stacked">Correo electrónico</ion-label>
+          <ion-input 
+            type="email" 
+            [(ngModel)]="email" 
+            name="email"
+            placeholder="tu@email.com">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-item class="custom-input" lines="none">
+          <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input 
+            type="password" 
+            [(ngModel)]="password" 
+            name="password"
+            placeholder="••••••••">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="button-group">
+        <ion-button 
+          expand="block" 
+          class="primary-button"
+          (click)="login()" 
+          [disabled]="loading">
+          <ion-icon name="log-in-outline" slot="start" *ngIf="!loading"></ion-icon>
+          <ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+          {{ loading ? 'Ingresando...' : 'Iniciar Sesión' }}
+        </ion-button>
+
+        <div class="divider">
+          <span>o</span>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          class="secondary-button"
+          (click)="goToRegister()">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          Crear Nueva Cuenta
+        </ion-button>
+      </div>
+    </form>
+
+    <!-- Links adicionales -->
+    <div class="additional-links">
+      <ion-button fill="clear" size="small" class="link-button">
+        ¿Olvidaste tu contraseña?
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

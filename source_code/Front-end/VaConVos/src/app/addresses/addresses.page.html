@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis direcciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="addresses-container">
+    <div class="address-form">
+      <ion-list>
+        <ion-item class="custom-input"><ion-label position="stacked">Dirección</ion-label><ion-input [(ngModel)]="line1"></ion-input></ion-item>
+        <ion-item class="custom-input"><ion-label position="stacked">Ciudad</ion-label><ion-input [(ngModel)]="city"></ion-input></ion-item>
+      </ion-list>
+      <ion-button expand="block" (click)="add()">Agregar</ion-button>
+    </div>
+
+    <ion-list class="saved-addresses" *ngIf="addresses.length">
+      <ion-item *ngFor="let a of addresses">
+        <ion-label>{{ a.line1 }} <small *ngIf="a.city">- {{ a.city }}</small></ion-label>
+        <ion-button slot="end" color="danger" (click)="remove(a.id)">Eliminar</ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

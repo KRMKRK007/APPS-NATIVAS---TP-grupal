@@ -1,0 +1,165 @@
+// ===== PÁGINA: MÉTODOS DE PAGO =====
+
+ion-content {
+	--background: var(--va-gradient-subtle);
+	padding: var(--va-spacing-md);
+
+	.pm-container {
+		width: 100%;
+		max-width: 640px;
+		margin: 0 auto;
+	}
+
+	.section-title {
+		display: flex;
+		align-items: center;
+		gap: var(--va-spacing-xs);
+		margin: 0 0 var(--va-spacing-sm) 0;
+		font-family: var(--va-font-family-accent);
+		font-size: var(--va-font-size-lg);
+		font-weight: var(--va-font-weight-bold);
+		color: var(--ion-color-dark);
+	}
+
+	form {
+		width: 100%;
+		max-width: 640px;
+		margin: 0 auto var(--va-spacing-xl) auto;
+	}
+
+	// Tarjeta del formulario
+		form ion-list {
+			background: white;
+			border-radius: var(--va-border-radius-xl);
+			box-shadow: var(--va-shadow-lg);
+			border: 1px solid rgba(0, 0, 0, 0.12);
+		padding: var(--va-spacing-sm);
+		margin-bottom: var(--va-spacing-lg);
+
+		ion-item {
+			--background: white; // mejora contraste con texto
+			--border-radius: var(--va-border-radius-md);
+			border: 1px solid rgba(0, 0, 0, 0.12);
+			transition: var(--va-transition-normal);
+			margin: var(--va-spacing-xs) var(--va-spacing-xs);
+
+			&.item-has-focus {
+						--background: white;
+						border-color: var(--ion-color-primary);
+						box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.12);
+			}
+
+							ion-label {
+				font-family: var(--va-font-family-secondary);
+				font-weight: var(--va-font-weight-medium);
+				font-size: var(--va-font-size-sm);
+								color: var(--ion-color-dark); // mejor legibilidad
+				margin-bottom: var(--va-spacing-xs);
+			}
+
+					ion-input {
+				font-family: var(--va-font-family-primary);
+				font-size: var(--va-font-size-base);
+				input { color: var(--ion-color-dark) !important; }
+					}
+
+					&.ng-invalid.ng-touched {
+						border-color: var(--ion-color-danger);
+					}
+
+					&.ng-invalid.ng-touched ion-label { color: var(--ion-color-danger); }
+					&.ng-invalid.ng-touched ion-input input { color: var(--ion-color-danger) !important; }
+					&.ng-invalid.ng-touched::after {
+						content: 'Revisá este campo';
+						display: block;
+						color: var(--ion-color-danger);
+						font-size: var(--va-font-size-xs);
+						margin-top: 2px;
+			}
+		}
+	}
+
+	// Botón principal
+	ion-button[type="submit"] {
+		--background: var(--va-gradient-primary);
+		--color: white;
+		--border-radius: var(--va-border-radius-md);
+		--box-shadow: var(--va-shadow-md);
+		--height: 50px;
+		font-family: var(--va-font-family-secondary);
+		font-weight: var(--va-font-weight-semibold);
+		letter-spacing: 0.3px;
+		text-transform: none;
+
+		&:hover:not(.button-disabled) {
+			--box-shadow: var(--va-shadow-lg);
+			transform: translateY(-1px);
+		}
+	}
+
+	// Nota pequeña bajo el botón
+	p {
+		color: var(--va-color-warm-gray);
+	}
+
+		// Lista de métodos guardados
+			> ion-list {
+		width: 100%;
+			max-width: 640px;
+		margin: 0 auto;
+		background: white;
+		border-radius: var(--va-border-radius-xl);
+				box-shadow: var(--va-shadow-md);
+				border: 1px solid rgba(0, 0, 0, 0.12);
+
+		ion-item {
+			--background: transparent;
+				padding: var(--va-spacing-xs) 0;
+				position: relative;
+
+						&::before {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: 8px;
+					bottom: 8px;
+					width: 4px;
+					border-radius: 4px;
+							background: var(--ion-color-primary);
+							opacity: 0.6; // barra más visible
+				}
+
+			ion-label h2 {
+				font-family: var(--va-font-family-accent);
+				font-weight: var(--va-font-weight-bold);
+				color: var(--ion-color-dark);
+				margin: 0 0 2px 0;
+			}
+			ion-label p {
+				font-size: var(--va-font-size-sm);
+				color: var(--va-color-warm-gray);
+				margin: 0;
+			}
+
+			ion-button[color="danger"] {
+				--border-radius: var(--va-border-radius-full);
+				--padding-start: var(--va-spacing-sm);
+				--padding-end: var(--va-spacing-sm);
+				transition: var(--va-transition-fast);
+
+				&:hover {
+					filter: brightness(0.95);
+				}
+			}
+		}
+	}
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 480px) {
+	ion-content {
+		padding: var(--va-spacing-sm);
+		form ion-list { padding: var(--va-spacing-xs); }
+	}
+}
+

@@ -1,0 +1,280 @@
+// ===== PÁGINA DE LOGIN VACONVOS =====
+
+.login-content {
+  --background: var(--va-gradient-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--va-spacing-md);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+// ===== SECCIÓN DE BIENVENIDA =====
+.welcome-section {
+  text-align: center;
+  margin-bottom: var(--va-spacing-2xl);
+  
+  .logo-container {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background: var(--va-gradient-primary);
+    border-radius: var(--va-border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--va-spacing-lg);
+    box-shadow: var(--va-shadow-lg);
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      color: white;
+    }
+  }
+  
+  .welcome-title {
+    font-family: var(--va-font-family-accent);
+    font-size: var(--va-font-size-3xl);
+    font-weight: var(--va-font-weight-bold);
+    margin-bottom: var(--va-spacing-sm);
+    letter-spacing: -0.5px;
+  }
+  
+  .welcome-subtitle {
+    font-size: var(--va-font-size-base);
+    color: var(--va-color-warm-gray);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// ===== FORMULARIO DE LOGIN =====
+.login-form {
+  background: white;
+  padding: var(--va-spacing-xl);
+  border-radius: var(--va-border-radius-xl);
+  box-shadow: var(--va-shadow-lg);
+  border: 1px solid rgba(74, 124, 89, 0.08);
+  
+  .form-group {
+    margin-bottom: var(--va-spacing-lg);
+    
+    &:last-of-type {
+      margin-bottom: var(--va-spacing-xl);
+    }
+    
+    .custom-input {
+      --background: var(--va-color-natural-light);
+      --border-radius: var(--va-border-radius-md);
+      --padding-start: var(--va-spacing-md);
+      --padding-end: var(--va-spacing-md);
+      --inner-padding-top: var(--va-spacing-md);
+      --inner-padding-bottom: var(--va-spacing-md);
+      border: 2px solid transparent;
+      transition: var(--va-transition-normal);
+      margin: 0;
+      
+      &.item-has-focus {
+        --background: white;
+        border-color: var(--ion-color-primary);
+        box-shadow: var(--va-shadow-sm);
+      }
+      
+      .input-icon {
+        color: var(--ion-color-primary);
+        font-size: 1.2rem;
+        margin-right: var(--va-spacing-sm);
+      }
+      
+      ion-label {
+        font-family: var(--va-font-family-secondary);
+        font-weight: var(--va-font-weight-medium);
+        font-size: var(--va-font-size-sm);
+        color: var(--ion-color-primary);
+        margin-bottom: var(--va-spacing-xs);
+      }
+      
+      ion-input {
+        font-family: var(--va-font-family-primary);
+        font-size: var(--va-font-size-base);
+        
+        input {
+          color: var(--ion-color-dark) !important;
+        }
+      }
+    }
+  }
+}
+
+// ===== BOTONES =====
+.button-group {
+  .primary-button {
+    --background: var(--va-gradient-primary);
+    --color: white;
+    --border-radius: var(--va-border-radius-md);
+    --box-shadow: var(--va-shadow-md);
+    --height: 52px;
+    font-family: var(--va-font-family-secondary);
+    font-weight: var(--va-font-weight-semibold);
+    font-size: var(--va-font-size-base);
+    margin-bottom: var(--va-spacing-lg);
+    text-transform: none;
+    letter-spacing: 0.5px;
+    
+    &:hover:not(.button-disabled) {
+      --box-shadow: var(--va-shadow-lg);
+      transform: translateY(-1px);
+    }
+    
+    &.button-disabled {
+      opacity: 0.6;
+    }
+    
+    ion-icon {
+      font-size: 1.2rem;
+    }
+    
+    ion-spinner {
+      --color: white;
+    }
+  }
+  
+  .divider {
+    text-align: center;
+    margin: var(--va-spacing-lg) 0;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--va-color-warm-gray-light);
+    }
+    
+    span {
+      background: white;
+      padding: 0 var(--va-spacing-md);
+      color: var(--va-color-warm-gray);
+      font-size: var(--va-font-size-sm);
+      position: relative;
+      z-index: 1;
+    }
+  }
+  
+  .secondary-button {
+    --color: var(--ion-color-primary);
+    --border-color: var(--ion-color-primary);
+    --border-width: 2px;
+    --border-radius: var(--va-border-radius-md);
+    --height: 52px;
+    font-family: var(--va-font-family-secondary);
+    font-weight: var(--va-font-weight-medium);
+    font-size: var(--va-font-size-base);
+    text-transform: none;
+    letter-spacing: 0.5px;
+    
+    &:hover {
+      --background: var(--va-color-mint-light);
+      transform: translateY(-1px);
+    }
+    
+    ion-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// ===== ENLACES ADICIONALES =====
+.additional-links {
+  text-align: center;
+  margin-top: var(--va-spacing-xl);
+  
+  .link-button {
+    --color: var(--va-color-warm-gray);
+    font-size: var(--va-font-size-sm);
+    text-transform: none;
+    
+    &:hover {
+      --color: var(--ion-color-primary);
+    }
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 768px) {
+  .login-content {
+    padding: var(--va-spacing-sm);
+  }
+  
+  .welcome-section {
+    margin-bottom: var(--va-spacing-xl);
+    
+    .logo-container {
+      width: 70px;
+      height: 70px;
+      
+      .logo-icon {
+        font-size: 2rem;
+      }
+    }
+    
+    .welcome-title {
+      font-size: var(--va-font-size-2xl);
+    }
+    
+    .welcome-subtitle {
+      font-size: var(--va-font-size-sm);
+    }
+  }
+  
+  .login-form {
+    padding: var(--va-spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .login-content {
+    align-items: flex-start;
+    padding-top: var(--va-spacing-xl);
+  }
+  
+  .welcome-section {
+    .logo-container {
+      width: 60px;
+      height: 60px;
+      
+      .logo-icon {
+        font-size: 1.5rem;
+      }
+    }
+    
+    .welcome-title {
+      font-size: var(--va-font-size-xl);
+    }
+  }
+  
+  .login-form {
+    padding: var(--va-spacing-md);
+    
+    .form-group {
+      margin-bottom: var(--va-spacing-md);
+    }
+  }
+  
+  .button-group {
+    .primary-button,
+    .secondary-button {
+      --height: 48px;
+      font-size: var(--va-font-size-sm);
+    }
+  }
+}

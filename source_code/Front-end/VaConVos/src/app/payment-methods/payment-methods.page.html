@@ -1,0 +1,48 @@
+<!-- Métodos de pago -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Métodos de pago</ion-title>
+  </ion-toolbar>
+  
+</ion-header>
+<ion-content>
+  <div class="pm-container">
+    <h3 class="section-title">Agregar método de pago</h3>
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Nombre del titular</ion-label>
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Número de tarjeta</ion-label>
+        <ion-input formControlName="number" inputmode="numeric" placeholder="•••• •••• •••• ••••"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Vencimiento (MM/AA)</ion-label>
+        <ion-input formControlName="expiry" inputmode="numeric" placeholder="MM/AA"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">CVV</ion-label>
+        <ion-input formControlName="cvv" type="password" inputmode="numeric" placeholder="***"></ion-input>
+      </ion-item>
+    </ion-list>
+      <ion-button expand="block" type="submit" [disabled]="saving || cardForm.invalid">Guardar método de pago</ion-button>
+      <p class="ion-text-center ion-padding-top" style="font-size:12px">Se guardan solo últimos 4 dígitos y vencimiento.</p>
+    </form>
+
+    <h3 class="section-title" *ngIf="methods.length">Métodos guardados</h3>
+    <ion-list class="saved-methods" *ngIf="methods.length">
+      <ion-item *ngFor="let m of methods; trackBy: trackById">
+        <ion-label>
+          <h2>{{ m.tipo }} •••• {{ m.last4 }}</h2>
+          <p>Vence: {{ m.vencimiento }}</p>
+        </ion-label>
+        <ion-button slot="end" color="danger" (click)="remove(m.id)">Eliminar</ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

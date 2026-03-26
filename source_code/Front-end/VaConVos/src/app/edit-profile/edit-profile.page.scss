@@ -1,0 +1,131 @@
+// ===== PÁGINA: EDITAR PERFIL =====
+
+ion-content {
+	--background: var(--va-gradient-subtle);
+	padding: var(--va-spacing-md);
+}
+
+.profile-container {
+	width: 100%;
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+.profile-card {
+	background: rgb(198, 223, 167);
+	border-radius: var(--va-border-radius-xl);
+	box-shadow: var(--va-shadow-lg);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	padding: var(--va-spacing-xl);
+	position: relative;
+}
+
+.profile-header {
+	display: flex;
+		background: rgb(198, 223, 167);
+	align-items: center;
+	gap: var(--va-spacing-md);
+	margin-bottom: var(--va-spacing-lg);
+
+	.avatar {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background: var(--va-gradient-secondary);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 2rem;
+		box-shadow: var(--va-shadow-md);
+			transition: var(--va-transition-normal);
+	}
+
+	.header-info {
+		h2 {
+			margin: 0 0 4px 0;
+			font-family: var(--va-font-family-accent);
+			font-size: var(--va-font-size-xl);
+			font-weight: var(--va-font-weight-bold);
+		}
+		p {
+			margin: 0;
+			color: var(--va-color-warm-gray);
+		}
+	}
+}
+
+.form-section {
+	ion-list {
+		background: transparent;
+		padding: 0;
+
+		ion-item {
+				--background: white; // alto contraste
+			--border-radius: var(--va-border-radius-md);
+				border: 1px solid rgba(0, 0, 0, 0.12);
+			transition: var(--va-transition-normal);
+			margin-bottom: var(--va-spacing-sm);
+
+			&.item-has-focus { 
+				--background: white; 
+					border-color: var(--ion-color-primary); 
+					box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.12); 
+			}
+
+			ion-label {
+				font-family: var(--va-font-family-secondary);
+				font-weight: var(--va-font-weight-medium);
+				font-size: var(--va-font-size-sm);
+					color: var(--ion-color-dark); // mejor legibilidad
+				margin-bottom: var(--va-spacing-xs);
+			}
+
+			ion-input, ion-textarea {
+				font-size: var(--va-font-size-base);
+			}
+
+					&.ng-invalid.ng-touched { border-color: var(--ion-color-danger); }
+				&.ng-invalid.ng-touched ion-label { color: var(--ion-color-danger); }
+		}
+	}
+}
+
+.actions {
+	display: flex;
+	gap: var(--va-spacing-sm);
+	margin-top: var(--va-spacing-lg);
+
+	.save-btn {
+		--background: var(--va-gradient-primary);
+		--color: white;
+		--border-radius: var(--va-border-radius-md);
+		--box-shadow: var(--va-shadow-md);
+		--height: 48px;
+		font-family: var(--va-font-family-secondary);
+		font-weight: var(--va-font-weight-semibold);
+		text-transform: none;
+			transition: var(--va-transition-fast);
+			&:hover { --box-shadow: var(--va-shadow-lg); transform: translateY(-1px); }
+	}
+
+	.cancel-btn {
+		--color: var(--ion-color-primary);
+		--border-color: var(--ion-color-primary);
+		--border-width: 2px;
+		--border-radius: var(--va-border-radius-md);
+		--height: 48px;
+		text-transform: none;
+			transition: var(--va-transition-fast);
+			&:hover { --background: var(--va-color-mint-light); }
+	}
+}
+
+@media (max-width: 480px) {
+	.profile-card { padding: var(--va-spacing-lg); }
+	.profile-header { 
+		flex-direction: column; 
+		text-align: center; 
+	}
+}
+
